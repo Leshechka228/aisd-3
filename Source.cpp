@@ -96,7 +96,7 @@ Stats combSort(vector<int>& arr) {
 }
 
 int main() {
-    vector<int> arr_sizes = { 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 25000, 50000, 100000 };
+    vector<int> arr_sizes = { 1000, 2000, 3000 };
     vector<int> arr;
     random_device rd;
     mt19937 gen(rd());
@@ -104,7 +104,6 @@ int main() {
     for (int size : arr_sizes) {
         cout << "Array size: " << size << endl;
 
-        // Calculate average stats over 100 random arrays
         Stats insertion_stats, cocktail_stats, comb_stats;
         for (int i = 0; i < 100; i++) {
             arr.clear();
@@ -128,7 +127,6 @@ int main() {
             comb_stats.copy_count += combSort(comb_arr).copy_count;
         }
 
-        // Calculate average
         insertion_stats.comparison_count /= 100;
         insertion_stats.copy_count /= 100;
 
@@ -138,7 +136,6 @@ int main() {
         comb_stats.comparison_count /= 100;
         comb_stats.copy_count /= 100;
 
-        // Output average stats
         cout << "Insertion Sort:" << endl;
         cout << "Comparison count: " << insertion_stats.comparison_count << endl;
         cout << "Copy count: " << insertion_stats.copy_count << endl;
@@ -152,6 +149,101 @@ int main() {
         cout << "Copy count: " << comb_stats.copy_count << endl;
 
         cout << endl;
+
+        for (int i = 0; i < 100; i++) {
+            arr.clear();
+            arr.resize(size);
+            uniform_int_distribution<int> distrib(0, size);
+
+            // —генерируем полностью отсортированный массив
+            for (int j = 0; j < size; j++) {
+                arr[j] = j;
+            }
+
+            vector<int> insertion_arr = arr;
+            vector<int> cocktail_arr = arr;
+            vector<int> comb_arr = arr;
+
+            insertion_stats.comparison_count += insertionSort(insertion_arr).comparison_count;
+            insertion_stats.copy_count += insertionSort(insertion_arr).copy_count;
+
+            cocktail_stats.comparison_count += cocktailSort(cocktail_arr).comparison_count;
+            cocktail_stats.copy_count += cocktailSort(cocktail_arr).copy_count;
+
+            comb_stats.comparison_count += combSort(comb_arr).comparison_count;
+            comb_stats.copy_count += combSort(comb_arr).copy_count;
+        }
+
+        insertion_stats.comparison_count /= 100;
+        insertion_stats.copy_count /= 100;
+
+        cocktail_stats.comparison_count /= 100;
+        cocktail_stats.copy_count /= 100;
+
+        comb_stats.comparison_count /= 100;
+        comb_stats.copy_count /= 100;
+
+        cout << "Insertion Sort(Sorted):" << endl;
+        cout << "Comparison count(Sorted): " << insertion_stats.comparison_count << endl;
+        cout << "Copy count(Sorted): " << insertion_stats.copy_count << endl;
+
+        cout << "Cocktail Sort(Sorted):" << endl;
+        cout << "Comparison count(Sorted): " << cocktail_stats.comparison_count << endl;
+        cout << "Copy count(Sorted): " << cocktail_stats.copy_count << endl;
+
+        cout << "Comb Sort(Sorted):" << endl;
+        cout << "Comparison count(Sorted): " << comb_stats.comparison_count << endl;
+        cout << "Copy count(Sorted): " << comb_stats.copy_count << endl;
+
+        cout << endl;
+
+        for (int i = 0; i < 100; i++) {
+            arr.clear();
+            arr.resize(size);
+            uniform_int_distribution<int> distrib(0, size);
+
+            // —генерируем обратно отсортированный массив
+            for (int j = 0; j < size; j++) {
+                arr[j] = size - 1 - j;
+            }
+
+            vector<int> insertion_arr = arr;
+            vector<int> cocktail_arr = arr;
+            vector<int> comb_arr = arr;
+
+            insertion_stats.comparison_count += insertionSort(insertion_arr).comparison_count;
+            insertion_stats.copy_count += insertionSort(insertion_arr).copy_count;
+
+            cocktail_stats.comparison_count += cocktailSort(cocktail_arr).comparison_count;
+            cocktail_stats.copy_count += cocktailSort(cocktail_arr).copy_count;
+
+            comb_stats.comparison_count += combSort(comb_arr).comparison_count;
+            comb_stats.copy_count += combSort(comb_arr).copy_count;
+        }
+
+        insertion_stats.comparison_count /= 100;
+        insertion_stats.copy_count /= 100;
+
+        cocktail_stats.comparison_count /= 100;
+        cocktail_stats.copy_count /= 100;
+
+        comb_stats.comparison_count /= 100;
+        comb_stats.copy_count /= 100;
+
+        cout << "Insertion Sort:(Unsorted)" << endl;
+        cout << "Comparison count(Unsorted): " << insertion_stats.comparison_count << endl;
+        cout << "Copy count(Unsorted): " << insertion_stats.copy_count << endl;
+
+        cout << "Cocktail Sort(Unsorted):" << endl;
+        cout << "Comparison count(Unsorted): " << cocktail_stats.comparison_count << endl;
+        cout << "Copy count(Unsorted): " << cocktail_stats.copy_count << endl;
+
+        cout << "Comb Sort(Unsorted):" << endl;
+        cout << "Comparison count(Unsorted): " << comb_stats.comparison_count << endl;
+        cout << "Copy count(Unsorted): " << comb_stats.copy_count << endl;
+
+        cout << endl;
+
     }
 
     return 0;
